@@ -13,23 +13,26 @@ app = Flask(__name__)
 def index():    
     return 'Namaste .. Pls enter any folder follwed by slash'
 
-@app.route('/<path:name>')
+@app.route('/<name>')
 def displayListOfFile(name):
-    #name = name.replace("$","/")
+    name = name.replace(">","/")
     path = '/home/pi/'+name
     if os.path.isdir(path):
         a = list_directory(path)
-        #name = name.replace("/","$")
+        name = name.replace("/",">")
         return render_template('index.html',tree=a,name=name,path=path,isFile=isFile)
     ctype = guess_type(path)
     if os.path.isfile(path):
         return send_file(path)
 
-
+@app.route('/upload', methods=['POST'])
+def upload_function(path):
+    #file = request.files['file']
+    #file.save(os.path.join(path, filename))
+    return "bawa file upload ho gye"
+          
 def isFile(fileName):
     return os.path.isfile(fileName)
-
-
 
 def list_directory(path):
         try:
@@ -60,18 +63,6 @@ def translate_path(self, path):
             path = os.path.join(path, word)
         return path
 
-def copyfile(source, outputfile):
-        """Copy all data between two file objects.
-        The SOURCE argument is a file object open for reading
-        (or anything with a read() method) and the DESTINATION
-        argument is a file object open for writing (or
-        anything with a write() method).
-        The only reason for overriding this would be to change
-        the block size or perhaps to replace newlines by CRLF
-        -- note however that this the default server uses this
-        to copy binary data as well.
-        """
-        shutil.copyfileobj(source, outputfile)
 
 def guess_type(path):
         """Guess the type of a file.
