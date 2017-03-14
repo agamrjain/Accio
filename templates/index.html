@@ -1,0 +1,14 @@
+
+<h2> Accio !! </h2> 
+<h3>{{path}}</h3>
+
+<ul>
+   {% for file in tree %}
+	{% if isFile(path+'/'+file) %} 
+	   	<li style="color:red"><a href="{{ name }}/{{ file }}">{{ file }}</li>
+			
+	{% else %}
+      		<li><a href="{{ name }}/{{ file }}"> {{ file }} </a> </li>
+	{% endif %}
+   {% endfor %}
+ </ul>
