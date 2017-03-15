@@ -1,4 +1,5 @@
-from flask import Flask,render_template,send_from_directory,send_file
+from flask import Flask,render_template,send_from_directory,send_file,request,redirect
+from werkzeug import secure_filename
 import os
 import posixpath
 import mimetypes
@@ -24,13 +25,19 @@ def displayListOfFile(name):
     ctype = guess_type(path)
     if os.path.isfile(path):
         return send_file(path)
-
-@app.route('/upload', methods=['POST'])
-def upload_function(path):
-    #file = request.files['file']
-    #file.save(os.path.join(path, filename))
-    return "bawa file upload ho gye"
-          
+    
+@app.route('/uploader/', methods = ['GET', 'POST'])
+def upload_file():
+   #name = name.replace(">","/")
+   if request.method == 'POST':
+      f = request.files['file']
+      path = request.form['path']
+      name = request.form['name']
+      f.save(os.path.join(path, f.filename))
+      #f.save(secure_filename(f.filename))
+      location = '/'+name
+      return redirect(location, code=302)
+      
 def isFile(fileName):
     return os.path.isfile(fileName)
 
@@ -93,8 +100,6 @@ if not mimetypes.inited:
         '.c': 'text/plain',
         '.h': 'text/plain',
         })
-
-
 
 
 if __name__ == '__main__':
