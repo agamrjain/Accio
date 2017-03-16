@@ -2,21 +2,26 @@
 <h2> Accio !! </h2> 
 <h3>{{path}}</h3>
 {{name}}
+<br>
+{% for x in nameitem:%}
+<a href="{{linkname}}"> {{x}} -> </a>
+
+{% endfor %}
+
 
 <ul>
-   {% for file in tree %}
+   {% for file in tree: %}
 	{% if isFile(path+'/'+file) %} 
-	   	<li style="color:red"><a href="{{ name }}>{{ file }}">{{ file }}</li>
-			
+	   	<li style="color:red"><a href="{{ name }}>{{ file }}"> {{ file }} </li>
 	{% else %}
       		<li><a href="{{ name }}>{{ file }}"> {{ file }} </a> </li>
 	{% endif %}
    {% endfor %}
  </ul>
 <form action = "http://192.168.0.106:5000/uploader/" method = "POST" 
-         enctype = "multipart/form-data">
+					enctype = "multipart/form-data">
          <input type = "file" name = "file" />
          <input type="hidden" name="path" value="{{path}}"> 
  	 <input type="hidden" name="name" value="{{name}}"> 
-	<input type = "submit"/>
+	 <input type = "submit" />
  </form>
