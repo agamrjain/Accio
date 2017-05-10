@@ -17,13 +17,13 @@ def index():
 @app.route('/<name>')
 def displayListOfFile(name):
     name = name.replace(">","/")
-    path = '/home/pi/'+name
+    path = name
     if os.path.isdir(path):
         a = list_directory(path)
         name = name.replace("/",">")
         nameitem = name.split('>')
         linkname=''
-        return render_template('index_material.html',tree=a,name=name,path=path,isFile=isFile, nameitem = nameitem,linkname = linkname, rootpath=app.root_path)
+        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, nameitem = nameitem,linkname = linkname, rootpath=app.root_path)
     ctype = guess_type(path)
     if os.path.isfile(path):
         return send_file(path)

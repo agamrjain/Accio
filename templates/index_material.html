@@ -145,26 +145,18 @@ color: black;
                 <ul class="demo-list-icon mdl-list">
                     {% for file in tree %}
                     {% if isFile(path+'/'+file) %}
-                    <li class="mdl-list__item">
-                        
+                      <li class="mdl-list__item">
                         <span class="mdl-list__item-primary-content">
-                            <i class="material-icons">folder</i>
-                        <a href="{{ name }}>{{ file }}">
-		       {{ file }}
-                        </a>
-			</span>
-                        
-                    </li>
+                          <i class="material-icons">folder</i>
+                          <a href="{{ name }}>{{ file }}">{{ file }}</a>
+			                 </span>            
+                      </li>
                     {% else %}
                     <li class="mdl-list__item">
-                       
-                         <span class="mdl-list__item-primary-content">
-                             <i class="material-icons">insert_drive_file</i>
- <a href="{{ name }}>{{ file }}">
-                               {{ file }}
-</a>
+                      <span class="mdl-list__item-primary-content">
+                         <i class="material-icons">insert_drive_file</i>
+                            <a href="{{ name }}>{{ file }}"> {{ file }} </a>
                          </span>
-                        </a>
                     </li>
                     {% endif %}
                     {% endfor %}
