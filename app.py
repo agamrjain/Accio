@@ -12,7 +12,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():    
-    return 'Namaste .. Pls enter any folder follwed by slash'
+    return '<h2>Namaste .. Pls enter any folder followed by slash</h2>'+ app.root_path
 
 @app.route('/<name>')
 def displayListOfFile(name):
