@@ -171,6 +171,7 @@ footer {
 .demo-card-wide.mdl-card {
     /* width: 512px;*/
     width: 100%;
+    margin-top: -7px;
 }
 
 .demo-card-wide > .mdl-card__title {
@@ -186,6 +187,10 @@ footer {
 .mdl-card__title-text {
     position: fixed;
     align-self: center;
+    background-color: #0a588c;
+    color: white;
+    width: 100%
+
    /* border-style: solid;
     border-color: #0a588c;*/
     /*width: 50%;
@@ -202,3 +207,7 @@ a {
 md-subheader{
     margin-left: 40%;
   }
+
+.mdl-list {
+  padding-top:30px!important;
+}
