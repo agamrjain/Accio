@@ -10,25 +10,56 @@ import shutil
 
 app = Flask(__name__)
 
-@app.route('/')
+#@app.route('/')
 def index():    
     return '<h2>Namaste .. Pls enter any folder followed by slash</h2>'+ app.root_path
 
-@app.route('/<name>')
+#@app.route('/<name>')
+#def displayListOfFile(name):
+#    name = name.replace(">","/")
+#    path = name
+#    if os.path.isdir(path):
+#        a = list_directory(path)
+#        name = name.replace("/",">")
+#        nameitem = name.split('>')
+#        linkname=''
+#        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, nameitem = nameitem,linkname = linkname, rootpath=app.root_path)
+#    #ctype = guess_type(path)
+#    elif os.path.isfile(path):
+#        return send_file(path)
+#    else:
+#        return render_template('error.html')
+
+#@app.route('/', defaults={'path': ''})
+#@app.route('/<path:path>')
+def catch_all(path):
+    return 'You want path: %s' % path
+
+@app.route('/', defaults={'path': ''})
+@app.route('/<path:name>')
 def displayListOfFile(name):
-    name = name.replace(">","/")
+    #return name;
+    #name = name.replace(">","/")
     path = name
     if os.path.isdir(path):
         a = list_directory(path)
-        name = name.replace("/",">")
-        nameitem = name.split('>')
-        linkname=''
-        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, nameitem = nameitem,linkname = linkname, rootpath=app.root_path)
-    ctype = guess_type(path)
-    if os.path.isfile(path):
+        #name = name.replace("/",">")
+        #nameitem = name.split('>')
+        #linkname=''
+        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, rootpath=app.root_path)
+    #ctype = guess_type(path)
+    elif os.path.isfile(path):
         return send_file(path)
-    
-@app.route('/uploader/', methods = ['GET', 'POST'])
+    else:
+        return render_template('error.html')
+
+
+
+
+
+
+
+#@app.route('/uploader/', methods = ['GET', 'POST'])
 def upload_file():
    #name = name.replace(">","/")
    if request.method == 'POST':

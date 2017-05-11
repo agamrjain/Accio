@@ -57,7 +57,7 @@
             </div> -->
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <span class="mdl-layout__title mdl-shadow--2dp mdl-card__title-text mdl-card__supporting-text demo-card-wide">
-                        <span class="mdl-layout__title"> {{path}} </span>
+                        <span class="mdl-layout__title"> {{name}} </span>
                     </span>
                     <!-- </div> -->
                     <div class="mdl-card__supporting-text">
@@ -66,14 +66,14 @@
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">insert_drive_file </i>
-                                    <a href="{{ name }}>{{ file }}"> {{ file }} </a>
+                                    <a href="{{ name }}/{{ file }}"> {{ file }} </a>
                                 </span>
                             </li>
                             {% else %}
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">folder</i>
-                                    <a mdl-navigation__link href="{{ name }}>{{ file }}"> {{ file }} </a>
+                                    <a mdl-navigation__link href="{{ name }}/{{ file }}"> {{ file }} </a>
                                 </span>
                             </li>
                             {% endif %} {% endfor %}
