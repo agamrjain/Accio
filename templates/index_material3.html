@@ -22,22 +22,22 @@
                     <span class="mdl-layout__title">Accio</span>
                 </span>
             </div>
-            <!--  <div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
+             <div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
              <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-                 <a class="mdl-navigation__link is-active" href="index.html">Portfolio</a>
-                 <a class="mdl-navigation__link" href="blog.html">Blog</a>
-                 <a class="mdl-navigation__link" href="about.html">About</a>
-                 <a class="mdl-navigation__link" href="contact.html">Contact</a>
+                 <a class="mdl-navigation__link is-active" href="index.html">File Explorer</a>
+                 <a class="mdl-navigation__link" href="settings">Settings</a>
+                <!--  <a class="mdl-navigation__link" href="about.html">About</a>
+                 <a class="mdl-navigation__link" href="contact.html">Contact</a> -->
              </nav>
-        </div> -->
+        </div> 
         </header>
         <div class="mdl-layout__drawer mdl-layout--small-screen-only">
-            <!-- <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-            <a class="mdl-navigation__link is-active" href="index.html">Portfolio</a>
-            <a class="mdl-navigation__link" href="blog.html">Blog</a>
-            <a class="mdl-navigation__link" href="about.html">About</a>
-            <a class="mdl-navigation__link" href="contact.html">Contact</a>
-        </nav> -->
+            <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+            <a class="mdl-navigation__link is-active" href="index.html">File Explorer</a>
+            <a class="mdl-navigation__link" href="settings">Settings</a>
+          <!--   <a class="mdl-navigation__link" href="about.html">About</a>
+            <a class="mdl-navigation__link" href="contact.html">Contact</a> -->
+        </nav>
         </div>
         <main class="mdl-layout__content">
             <div class="mdl-grid portfolio-max-width">
@@ -66,14 +66,18 @@
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">insert_drive_file </i>
-                                    <a href="{{ name }}/{{ file }}"> {{ file }} </a>
+                                    <!-- <a href="{{ name }}/{{ file }}"> {{ file }} </a> -->
+
+                                     <a mdl-navigation__link href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
                                 </span>
                             </li>
                             {% else %}
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">folder</i>
-                                    <a mdl-navigation__link href="{{ name }}/{{ file }}"> {{ file }} </a>
+                                   <!--  <a mdl-navigation__link href="{{ name }}/{{ file }}"> {{ file }} </a>
+                                    -->
+                                     <a mdl-navigation__link href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
                                 </span>
                             </li>
                             {% endif %} {% endfor %}
