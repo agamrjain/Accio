@@ -9,8 +9,10 @@
     <title>Accio</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.grey-pink.min.css" />
-    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles3.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/mdb.min.css') }}" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="{{ url_for('static',filename='styles/styles3.css') }}" />
 </head>
 
 <body>
@@ -22,22 +24,22 @@
                     <span class="mdl-layout__title">Accio</span>
                 </span>
             </div>
-             <div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
-             <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-                 <a class="mdl-navigation__link is-active" href="index.html">File Explorer</a>
-                 <a class="mdl-navigation__link" href="settings">Settings</a>
-                <!--  <a class="mdl-navigation__link" href="about.html">About</a>
+            <div class="mdl-layout__header-row portfolio-navigation-row mdl-layout--large-screen-only">
+                <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
+                    <a class="mdl-navigation__link is-active" href="\">File Explorer</a>
+                    <a class="mdl-navigation__link" href="settings">Settings</a>
+                    <!--  <a class="mdl-navigation__link" href="about.html">About</a>
                  <a class="mdl-navigation__link" href="contact.html">Contact</a> -->
-             </nav>
-        </div> 
+                </nav>
+            </div>
         </header>
         <div class="mdl-layout__drawer mdl-layout--small-screen-only">
             <nav class="mdl-navigation mdl-typography--body-1-force-preferred-font">
-            <a class="mdl-navigation__link is-active" href="index.html">File Explorer</a>
-            <a class="mdl-navigation__link" href="settings">Settings</a>
-          <!--   <a class="mdl-navigation__link" href="about.html">About</a>
+                <a class="mdl-navigation__link is-active" href="\">File Explorer</a>
+                <a class="mdl-navigation__link" href="settings">Settings</a>
+                <!--   <a class="mdl-navigation__link" href="about.html">About</a>
             <a class="mdl-navigation__link" href="contact.html">Contact</a> -->
-        </nav>
+            </nav>
         </div>
         <main class="mdl-layout__content">
             <div class="mdl-grid portfolio-max-width">
@@ -57,27 +59,28 @@
             </div> -->
                 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <span class="mdl-layout__title mdl-shadow--2dp mdl-card__title-text mdl-card__supporting-text demo-card-wide">
-                        <span class="mdl-layout__title"> {{name}} </span>
+                        <div class="mdl-layout__title"> 
+                            {% for link,name_of_folder in list_of_links %}
+                                <a href="{{ link }}"> {{ name_of_folder }} > </a> 
+                            {% endfor %}
+                        </div>
                     </span>
                     <!-- </div> -->
                     <div class="mdl-card__supporting-text">
                         <ul class="demo-list-icon mdl-list">
-                            {% for file in tree %} {% if isFile(path+'/'+file) %}
+                            {% for file in file_list %} {% if isFile(name+'/'+file) %}
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">insert_drive_file </i>
-                                    <!-- <a href="{{ name }}/{{ file }}"> {{ file }} </a> -->
-
-                                     <a mdl-navigation__link href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
+                                    <a mdl-navigation__link 
+                                    href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
                                 </span>
                             </li>
                             {% else %}
                             <li class="mdl-list__item">
                                 <span class="mdl-list__item-primary-content">
                                     <i class="material-icons">folder</i>
-                                   <!--  <a mdl-navigation__link href="{{ name }}/{{ file }}"> {{ file }} </a>
-                                    -->
-                                     <a mdl-navigation__link href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
+                                    <a mdl-navigation__link href={{url_for('display_list_of_file',name=name+'/'+file)}}> {{ file }} </a>
                                 </span>
                             </li>
                             {% endif %} {% endfor %}

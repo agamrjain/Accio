@@ -13,30 +13,41 @@ app = Flask(__name__)
 default_path = 'C:/'
 
 
-@app.route('/settings')
+@app.route('/settings', defaults={'path':default_path})
 @app.route('/<path:path>/settings')
 def setting(path):
+    return render_template('settings.html')
+
+
+@app.route('/settings_form/',  methods=['POST'])
+def settings_form():
     global default_path
     default_path = 'D:/'
-    return render_template('settings.html', d = default_path)
+    dir=request.form['dir']
+    default_path = dir
+    return redirect("/")
 
 
-def setting_form():
-    global default_path
-    default_path = 'D:/'
-    return
-
-
-@app.route('/', defaults={'name': 'xxx'})
+@app.route('/', defaults={'name': 'some_unknown_folder_path'})
 @app.route('/<path:name>')
 def display_list_of_file(name):
     global default_path
-    if name == 'xxx':
+    if name == 'some_unknown_folder_path':
         name = default_path
     path = name
     if os.path.isdir(path):
         a = list_directory(path)
-        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, rootpath=app.root_path)
+        path = path.replace('/','//')
+        path = path.replace('////', '//')
+        path_list = path.split('//')
+
+        list_of_links = ['']
+        i=0
+        for link in path_list:
+            list_of_links.append(list_of_links[i] + "/" + link)
+            i=i+1
+        list_of_links.remove('')
+        return render_template('index_material3.html',file_list=a,name=name,path=path,isFile=isFile, rootpath=app.root_path,path_list=path_list,list_of_links=zip(list_of_links,path_list))
     elif os.path.isfile(path):
         return send_file(path)
     else:
@@ -46,17 +57,19 @@ def display_list_of_file(name):
 #@app.route('/uploader/', methods = ['GET', 'POST'])
 def upload_file():
    #name = name.replace(">","/")
-   if request.method == 'POST':
-      f = request.files['file']
-      path = request.form['path']
-      name = request.form['name']
-      f.save(os.path.join(path, f.filename))
-      #f.save(secure_filename(f.filename))
-      location = '/'+name
-      return redirect(location, code=302)
-      
+    if request.method == 'POST':
+        f = request.files['file']
+        path = request.form['path']
+        name = request.form['name']
+        f.save(os.path.join(path, f.filename))
+        #f.save(secure_filename(f.filename))
+        location = '/'+name
+        return redirect(location, code=302)
+
+
 def isFile(fileName):
     return os.path.isfile(fileName)
+
 
 def list_directory(path):
         try:
