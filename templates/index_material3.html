@@ -111,9 +111,11 @@
                         </form>
                          -->
                          <form  class="upload_form" method="post" action="{{ url_for('upload_form') }}"  enctype="multipart/form-data">
-                            <input type="file" name="file" class="file-upload">
+                           
+                            <input type="file" name="file" class="file-upload" >
                             <input type="text" name="path" hidden="true" value="{{ path }}">  
-                            <input type="submit" name="submit" class="submit-btn">    
+                            <input type="submit" name="submit" class="submit-btn">
+  
                         </form>
                         
                     </div>
