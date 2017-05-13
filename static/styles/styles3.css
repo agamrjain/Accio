@@ -206,9 +206,29 @@ footer {
 .mdl-list__item a {
     color: black;
     margin-left: 10px;
-    
+
 }
 
 .mdl-list {
   padding-top:30px!important;
+}
+
+.upload_form{
+    position: fixed;
+    bottom: 1rem;
+    right: 2rem;
+    width: 22.4rem;
+    color: white;
+    /*border: 3px solid #0a588c*/;
+    background-color: #e8e5e2;
+}
+
+.file-upload{
+    width: 16rem;
+    z-index: 2;
+}
+
+.submit-btn{
+  
+
 }

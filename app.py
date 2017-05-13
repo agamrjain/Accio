@@ -54,17 +54,15 @@ def display_list_of_file(name):
         return render_template('error.html')
 
 
-#@app.route('/uploader/', methods = ['GET', 'POST'])
-def upload_file():
-   #name = name.replace(">","/")
+@app.route('/upload_form/', methods = ['GET', 'POST'])
+def upload_form():
     if request.method == 'POST':
         f = request.files['file']
         path = request.form['path']
-        name = request.form['name']
         f.save(os.path.join(path, f.filename))
-        #f.save(secure_filename(f.filename))
-        location = '/'+name
-        return redirect(location, code=302)
+        return redirect(path)
+    else:
+        return "invalid Request"
 
 
 def isFile(fileName):
