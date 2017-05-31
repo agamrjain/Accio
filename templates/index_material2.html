@@ -69,7 +69,8 @@
                     </div>
                   <!--   <h3>How to install MDL</h3> -->
                     <ul class="demo-list-icon mdl-list">
-                        {% for file in tree %} {% if isFile(path+'/'+file) %}
+                        {% for file in tree %} 
+                        {% if isFile(path+'/'+file) %}
                         <li class="mdl-list__item">
                             <span class="mdl-list__item-primary-content">
                           <i class="material-icons">insert_drive_file</i>

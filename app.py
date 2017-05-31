@@ -1,5 +1,5 @@
 from flask import Flask,render_template,send_from_directory,send_file,request,redirect
-from werkzeug import secure_filename
+#from werkzeug import secure_filename
 import os
 import posixpath
 import mimetypes
@@ -10,46 +10,71 @@ import shutil
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():    
-    return '<h2>Namaste .. Pls enter any folder followed by slash</h2>'+ app.root_path
+default_path = 'C:/'
 
-@app.route('/<name>')
-def displayListOfFile(name):
-    name = name.replace(">","/")
+
+@app.route('/settings', defaults={'path':default_path})
+@app.route('/<path:path>/settings')
+def setting(path):
+    return render_template('settings.html')
+
+
+@app.route('/settings_form/',  methods=['POST'])
+def settings_form():
+    global default_path
+    default_path = 'D:/'
+    dir=request.form['dir']
+    default_path = dir
+    return redirect("/")
+
+
+@app.route('/', defaults={'name': 'some_unknown_folder_path'})
+@app.route('/<path:name>')
+def display_list_of_file(name):
+    global default_path
+    if name == 'some_unknown_folder_path':
+        name = default_path
     path = name
     if os.path.isdir(path):
         a = list_directory(path)
-        name = name.replace("/",">")
-        nameitem = name.split('>')
-        linkname=''
-        return render_template('index_material3.html',tree=a,name=name,path=path,isFile=isFile, nameitem = nameitem,linkname = linkname, rootpath=app.root_path)
-    ctype = guess_type(path)
-    if os.path.isfile(path):
+        path = path.replace('/','//')
+        path = path.replace('////', '//')
+        path_list = path.split('//')
+
+        list_of_links = ['']
+        i=0
+        for link in path_list:
+            list_of_links.append(list_of_links[i] + "/" + link)
+            i=i+1
+        list_of_links.remove('')
+        return render_template('index_material3.html',file_list=a,name=name,path=path,isFile=isFile, rootpath=app.root_path,path_list=path_list,list_of_links=zip(list_of_links,path_list))
+    elif os.path.isfile(path):
         return send_file(path)
-    
-@app.route('/uploader/', methods = ['GET', 'POST'])
-def upload_file():
-   #name = name.replace(">","/")
-   if request.method == 'POST':
-      f = request.files['file']
-      path = request.form['path']
-      name = request.form['name']
-      f.save(os.path.join(path, f.filename))
-      #f.save(secure_filename(f.filename))
-      location = '/'+name
-      return redirect(location, code=302)
-      
+    else:
+        return render_template('error.html')
+
+
+@app.route('/upload_form/', methods = ['GET', 'POST'])
+def upload_form():
+    if request.method == 'POST':
+        f = request.files['file']
+        path = request.form['path']
+        f.save(os.path.join(path, f.filename))
+        return redirect(path)
+    else:
+        return "invalid Request"
+
+
 def isFile(fileName):
     return os.path.isfile(fileName)
+
 
 def list_directory(path):
         try:
             list = os.listdir(path)
         except os.error:
-            self.send_error(404, "No permission to list directory")
-            return None
-        list.sort(key=lambda a: a.lower())
+            return "404, No permission to list directory"
+        #list.sort(key=lambda a: a.lower())
         return list
 
 def translate_path(self, path):
