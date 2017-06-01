@@ -10,7 +10,7 @@ import shutil
 
 app = Flask(__name__)
 
-default_path = 'C:/'
+default_path = '/media/pi/'
 
 
 @app.route('/settings', defaults={'path':default_path})
@@ -22,7 +22,7 @@ def setting(path):
 @app.route('/settings_form/',  methods=['POST'])
 def settings_form():
     global default_path
-    default_path = 'D:/'
+    default_path = '/media/pi/'
     dir=request.form['dir']
     default_path = dir
     return redirect("/")
@@ -31,8 +31,9 @@ def settings_form():
 @app.route('/', defaults={'name': 'some_unknown_folder_path'})
 @app.route('/<path:name>')
 def display_list_of_file(name):
+    name = "/"+name
     global default_path
-    if name == 'some_unknown_folder_path':
+    if name == '/some_unknown_folder_path':
         name = default_path
     path = name
     if os.path.isdir(path):
@@ -41,17 +42,17 @@ def display_list_of_file(name):
         path = path.replace('////', '//')
         path_list = path.split('//')
 
-        list_of_links = ['']
+        list_of_links = ['/']
         i=0
         for link in path_list:
             list_of_links.append(list_of_links[i] + "/" + link)
             i=i+1
-        list_of_links.remove('')
-        return render_template('index_material3.html',file_list=a,name=name,path=path,isFile=isFile, rootpath=app.root_path,path_list=path_list,list_of_links=zip(list_of_links,path_list))
+        list_of_links.remove('/')
+        return render_template('index_material3.html',file_list=a,name="/"+name,path=path,isFile=isFile, rootpath=app.root_path,path_list=path_list,list_of_links=zip(list_of_links,path_list))
     elif os.path.isfile(path):
         return send_file(path)
     else:
-        return render_template('error.html')
+        return render_template('error.html',name=name)
 
 
 @app.route('/upload_form/', methods = ['GET', 'POST'])
@@ -60,7 +61,7 @@ def upload_form():
         f = request.files['file']
         path = request.form['path']
         f.save(os.path.join(path, f.filename))
-        return redirect(path)
+        return redirect("/"+path)
     else:
         return "invalid Request"
 
