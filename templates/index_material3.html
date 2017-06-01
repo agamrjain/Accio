@@ -68,8 +68,9 @@
                     <span class="mdl-layout__title mdl-shadow--2dp mdl-card__title-text mdl-card__supporting-text demo-card-wide">
                         <div class="mdl-layout__title"> 
                             {% for link,name_of_folder in list_of_links %}
-                                <a href="{{ link }}"> {{ name_of_folder }} > </a> 
-                            {% endfor %}
+                                <a href={{url_for('display_list_of_file',name=link)}}> {{ name_of_folder }} > </a> 
+                        	 
+			{% endfor %}
                         </div>
                     </span>
                     <!-- </div> -->
